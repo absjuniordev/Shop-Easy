@@ -15,6 +15,9 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: ProductsOverviewPage(),
       theme: ThemeData(
+        fontFamily: 'Lato',
+        primarySwatch: Colors.purple,
+        hintColor: Colors.deepOrange,
         appBarTheme: const AppBarTheme(
           color: Colors.purple,
           titleTextStyle: TextStyle(
