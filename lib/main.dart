@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shop/pages/product_datail_page.dart';
 import 'package:shop/pages/products_overview_page.dart';
+import 'package:shop/utils/app_routes.dart';
 
 void main() {
   runApp(const MainApp());
@@ -26,6 +28,9 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
+      routes: {
+        AppRoutes.PRODUCT_DETAIL: (context) => const ProductDatailPage(),
+      },
     );
   }
 }
