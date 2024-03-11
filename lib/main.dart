@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/model/product_list.dart';
 // import 'package:shop/pages/counter_page.dart';
 import 'package:shop/pages/product_datail_page.dart';
 import 'package:shop/pages/products_overview_page.dart';
@@ -16,25 +18,28 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //    return CounterProvider(
 
-    return MaterialApp(
-      title: "Meu Shop",
-      debugShowCheckedModeBanner: false,
-      home: ProductsOverviewPage(),
-      theme: ThemeData(
-        fontFamily: 'Lato',
-        primarySwatch: Colors.purple,
-        hintColor: Colors.deepOrange,
-        appBarTheme: const AppBarTheme(
-          color: Colors.purple,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
+    return ChangeNotifierProvider(
+      create: (_) => ProductList(),
+      child: MaterialApp(
+        title: "Meu Shop",
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Lato',
+          primarySwatch: Colors.purple,
+          hintColor: Colors.deepOrange,
+          appBarTheme: const AppBarTheme(
+            color: Colors.purple,
+            titleTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
           ),
         ),
+        home: const ProductsOverviewPage(),
+        routes: {
+          AppRoutes.PRODUCT_DETAIL: (context) => const ProductDatailPage(),
+        },
       ),
-      routes: {
-        AppRoutes.PRODUCT_DETAIL: (context) => const ProductDatailPage(),
-      },
     );
   }
 }
