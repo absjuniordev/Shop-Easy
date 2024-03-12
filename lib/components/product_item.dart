@@ -32,7 +32,7 @@ class ProductItem extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(Icons.shopping_cart),
           ),
-          title: Text(product.title),
+          title: Text(product.nome),
         ),
         child: GestureDetector(
           onTap: () {
