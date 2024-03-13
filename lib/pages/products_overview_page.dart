@@ -1,31 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:shop/components/product_item.dart';
-import 'package:shop/model/product.dart';
-import '../data/dummy_data.dart';
+import 'package:shop/components/product_grid.dart';
 
-class ProductsOverviewPage extends StatelessWidget {
-  ProductsOverviewPage({super.key});
+enum FilterOptions {
+  favorite,
+  all,
+}
 
-  final List<Product> loadProducts = dummyProducts;
+class ProductsOverviewPage extends StatefulWidget {
+  const ProductsOverviewPage({super.key});
+
+  @override
+  State<ProductsOverviewPage> createState() => _ProductsOverviewPageState();
+}
+
+class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
+  bool _showFavoriteOnly = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          PopupMenuButton(
+            icon: const Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+            itemBuilder: (_) => [
+              const PopupMenuItem(
+                value: FilterOptions.favorite,
+                child: Text('Somente Favaritos'),
+              ),
+              const PopupMenuItem(
+                value: FilterOptions.all,
+                child: Text('Todos'),
+              ),
+            ],
+            onSelected: (FilterOptions filter) {
+              setState(() {
+                if (filter == FilterOptions.favorite) {
+                  _showFavoriteOnly = true;
+                } else {
+                  _showFavoriteOnly = false;
+                }
+              });
+            },
+          )
+        ],
         title: const Text('Minha Loja'),
         centerTitle: true,
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(10),
-        itemCount: loadProducts.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
-        itemBuilder: (ctx, index) {
-          return ProductItem(product: loadProducts[index]);
-        },
+      body: ProductGrid(
+        showFavoriteOnly: _showFavoriteOnly,
       ),
     );
   }
