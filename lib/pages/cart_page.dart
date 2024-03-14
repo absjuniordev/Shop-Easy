@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/cart_item_widget.dart';
 import 'package:shop/model/cart.dart';
+import 'package:shop/model/order_list.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -9,6 +10,7 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+    final order = Provider.of<OrderList>(context, listen: false);
     final items = cart.items.values.toList();
 
     return Scaffold(
@@ -18,7 +20,10 @@ class CartPage extends StatelessWidget {
       body: Column(
         children: [
           Card(
-            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+            margin: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 25,
+            ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -38,15 +43,19 @@ class CartPage extends StatelessWidget {
                     label: Text(
                       'R\$ ${cart.totalAmount.toStringAsFixed(2)}',
                       style: TextStyle(
-                          color: Theme.of(context)
-                              .primaryTextTheme
-                              .titleLarge
-                              ?.color),
+                        color: Theme.of(context)
+                            .primaryTextTheme
+                            .titleLarge
+                            ?.color,
+                      ),
                     ),
                   ),
                   const Spacer(),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      order.addOrder(cart);
+                      cart.clena();
+                    },
                     child: const Text('COMPRAR'),
                   )
                 ],
