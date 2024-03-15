@@ -4,6 +4,7 @@ import 'package:shop/model/cart.dart';
 import 'package:shop/model/order_list.dart';
 import 'package:shop/model/product_list.dart';
 import 'package:shop/pages/cart_page.dart';
+import 'package:shop/pages/order_page.dart';
 // import 'package:shop/pages/counter_page.dart';
 import 'package:shop/pages/product_datail_page.dart';
 import 'package:shop/pages/products_overview_page.dart';
@@ -47,10 +48,12 @@ class MainApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const ProductsOverviewPage(),
+        // home: const ProductsOverviewPage(),
         routes: {
+          AppRoutes.HOME: (context) => const ProductsOverviewPage(),
           AppRoutes.PRODUCT_DETAIL: (context) => const ProductDatailPage(),
           AppRoutes.CART: (context) => const CartPage(),
+          AppRoutes.ORDERS: (context) => const OrderPage(),
         },
       ),
     );
