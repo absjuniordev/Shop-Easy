@@ -34,6 +34,16 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           const Divider(),
+          ListTile(
+            leading: const Icon(Icons.edit),
+            title: const Text('Pedidos'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(
+                AppRoutes.PRODUCTS_PAGE,
+              );
+            },
+          ),
+          const Divider(),
         ],
       ),
     );
