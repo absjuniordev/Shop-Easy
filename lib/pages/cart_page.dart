@@ -54,7 +54,7 @@ class CartPage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       order.addOrder(cart);
-                      cart.clena();
+                      cart.clean();
                     },
                     child: const Text('COMPRAR'),
                   )
