@@ -10,7 +10,7 @@ class ProductDatailPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Product;
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.nome),
+        title: Text(product.name),
       ),
       body: SingleChildScrollView(
         child: Column(

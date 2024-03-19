@@ -3,7 +3,7 @@ import '../model/product.dart';
 final dummyProducts = [
   Product(
     id: 'p1',
-    nome: 'Red Shirt',
+    name: 'Red Shirt',
     description: 'A red shirt - it is pretty red!',
     price: 29.99,
     imageUrl:
@@ -11,7 +11,7 @@ final dummyProducts = [
   ),
   Product(
     id: 'p2',
-    nome: 'Trousers',
+    name: 'Trousers',
     description: 'A nice pair of trousers.',
     price: 59.99,
     imageUrl:
@@ -19,14 +19,14 @@ final dummyProducts = [
   ),
   Product(
     id: 'p3',
-    nome: 'Cachecol Amarelo',
+    name: 'Cachecol Amarelo',
     description: 'Warm and cozy - exactly what you need for the winter.',
     price: 19.99,
     imageUrl: 'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
   ),
   Product(
     id: 'p4',
-    nome: 'Cachecol Vermelho',
+    name: 'Cachecol Vermelho',
     description: 'Warm and cozy - exactly what you need for the winter.',
     price: 19.99,
     imageUrl:
@@ -34,7 +34,7 @@ final dummyProducts = [
   ),
   Product(
     id: 'p5',
-    nome: 'A Panela',
+    name: 'A Panela',
     description: 'Prepare sua refeição.',
     price: 49.99,
     imageUrl:
@@ -42,7 +42,7 @@ final dummyProducts = [
   ),
   Product(
     id: 'p6',
-    nome: 'Tenis',
+    name: 'Tenis',
     description: 'Conforto e alto desempenho',
     price: 120.00,
     imageUrl:

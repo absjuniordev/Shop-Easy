@@ -52,7 +52,7 @@ class ProducGridtItem extends StatelessWidget {
               color: Theme.of(context).hintColor,
             ),
           ),
-          title: Text(product.nome),
+          title: Text(product.name),
         ),
         child: GestureDetector(
           onTap: () {
