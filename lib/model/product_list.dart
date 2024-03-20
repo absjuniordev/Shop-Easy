@@ -24,23 +24,33 @@ class ProductList with ChangeNotifier {
     );
 
     if (hasId) {
-      updatProduct(product);
+      updateProduct(product);
     } else {
       addProduct(product);
     }
   }
 
-  void updatProduct(Product product) {
+  void updateProduct(Product product) {
     int index = _items.indexWhere((p) => p.id == product.id);
 
     if (index >= 0) {
       _items[index] = product;
+      notifyListeners();
     } //se caso houver na lista de produto, sera atualizado
   }
 
   void addProduct(Product product) {
     _items.add(product);
     notifyListeners();
+  }
+
+  void removeProduct(Product product) {
+    int index = _items.indexWhere((p) => p.id == product.id);
+
+    if (index >= 0) {
+      _items.removeWhere((p) => p.id == product.id);
+      notifyListeners();
+    }
   }
 
   int get itemsCount {
