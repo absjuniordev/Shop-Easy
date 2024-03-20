@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/model/cart.dart';
-import 'package:shop/model/product.dart';
+import 'package:shop/model/provider/cart.dart';
+import 'package:shop/model/provider/product.dart';
 import 'package:shop/utils/app_routes.dart';
 
 class ProducGridtItem extends StatelessWidget {

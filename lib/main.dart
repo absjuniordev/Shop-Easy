@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/model/cart.dart';
-import 'package:shop/model/order_list.dart';
-import 'package:shop/model/product_list.dart';
+import 'package:shop/model/provider/cart.dart';
+import 'package:shop/model/provider/order_list.dart';
+import 'package:shop/model/provider/product_list.dart';
 import 'package:shop/pages/cart_page.dart';
 import 'package:shop/pages/order_page.dart';
 // import 'package:shop/pages/counter_page.dart';
@@ -21,8 +21,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //    return CounterProvider(
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -50,7 +48,6 @@ class MainApp extends StatelessWidget {
             ),
           ),
         ),
-        // home: const ProductsOverviewPage(),
         routes: {
           AppRoutes.HOME: (context) => const ProductsOverviewPage(),
           AppRoutes.PRODUCT_DETAIL: (context) => const ProductDatailPage(),
