@@ -12,15 +12,30 @@ class ProductList with ChangeNotifier {
   List<Product> get favoriteItems =>
       _items.where((product) => product.isFavorite).toList();
 
-  void addProductFromData(Map<String, Object> data) {
-    final newProduct = Product(
-      id: Random().nextDouble().toString(),
+  void saveProduct(Map<String, Object> data) {
+    final hasId = data['id'] != null;
+
+    final product = Product(
+      id: hasId ? data['id'] as String : Random().nextDouble().toString(),
       name: data['name'] as String,
       description: data['description'] as String,
       price: data['price'] as double,
       imageUrl: data['imageUrl'] as String,
     );
-    addProduct(newProduct);
+
+    if (hasId) {
+      updatProduct(product);
+    } else {
+      addProduct(product);
+    }
+  }
+
+  void updatProduct(Product product) {
+    int index = _items.indexWhere((p) => p.id == product.id);
+
+    if (index >= 0) {
+      _items[index] = product;
+    } //se caso houver na lista de produto, sera atualizado
   }
 
   void addProduct(Product product) {
