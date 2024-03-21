@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   provider:
   intl:  
-  http: ^0.13.3
+  http:
 
 
 dev_dependencies:

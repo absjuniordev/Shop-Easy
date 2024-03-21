@@ -1,10 +1,12 @@
+import 'dart:convert';
 import 'dart:math';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/model/provider/product.dart';
 
 class ProductList with ChangeNotifier {
+  final _baseUrl = "http://shop-app-3837f-default-rtb.firebaseio.com";
   final List<Product> _items = dummyProducts;
 
   List<Product> get items => [..._items];
@@ -36,10 +38,22 @@ class ProductList with ChangeNotifier {
     if (index >= 0) {
       _items[index] = product;
       notifyListeners();
-    } //se caso houver na lista de produto, sera atualizado
+    }
   }
 
   void addProduct(Product product) {
+    http.post(
+      Uri.parse("$_baseUrl/products.json"),
+      body: jsonEncode(
+        {
+          'name': product.name,
+          'description': product.description,
+          'price': product.price,
+          'imageUrl': product.imageUrl,
+          'isFavorite': product.isFavorite,
+        },
+      ),
+    );
     _items.add(product);
     notifyListeners();
   }
@@ -57,21 +71,3 @@ class ProductList with ChangeNotifier {
     return _items.length;
   }
 }
-
-
-  // bool _showFavoriteOnly = false;
-//  List<Product> get items {
-//     if (_showFavoriteOnly) {
-//       return _items.where((product) => product.isFavorite).toList();
-//     }
-//     return [..._items];
-//   }
-//  void showFavoriteOnly() {
-//     _showFavoriteOnly = true;
-//     notifyListeners();
-//   }
-
-//   void showAll() {
-//     _showFavoriteOnly = false;
-//     notifyListeners();
-//   }
