@@ -6,7 +6,7 @@ import 'package:shop/data/dummy_data.dart';
 import 'package:shop/model/provider/product.dart';
 
 class ProductList with ChangeNotifier {
-  final _baseUrl = "http://shop-app-3837f-default-rtb.firebaseio.com";
+  final _baseUrl = "https://shop-app-3837f-default-rtdb.firebaseio.com";
   final List<Product> _items = dummyProducts;
 
   List<Product> get items => [..._items];
