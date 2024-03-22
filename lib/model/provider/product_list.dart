@@ -42,7 +42,7 @@ class ProductList with ChangeNotifier {
   }
 
   void addProduct(Product product) {
-    http.post(
+    final resonse = http.post(
       Uri.parse("$_baseUrl/products.json"),
       body: jsonEncode(
         {
@@ -54,8 +54,18 @@ class ProductList with ChangeNotifier {
         },
       ),
     );
-    _items.add(product);
-    notifyListeners();
+    resonse.then((resp) {
+      final id = jsonDecode(resp.body)['name'];
+
+      _items.add(Product(
+        id: id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+      ));
+      notifyListeners();
+    });
   }
 
   void removeProduct(Product product) {
