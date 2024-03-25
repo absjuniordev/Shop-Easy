@@ -45,7 +45,26 @@ class ProductList with ChangeNotifier {
 
   Future<void> loadProducts() async {
     final response = await http.get(Uri.parse(_url));
-    print(jsonDecode(response.body));
+
+    if (response.body == 'null') return; //caso BD vazio
+
+    final Map<String, dynamic> data = jsonDecode(response.body);
+
+    data.forEach(
+      //chave        valor
+      (productId, prodcutData) {
+        _items.add(
+          Product(
+            id: productId,
+            name: prodcutData['name'],
+            description: prodcutData['description'],
+            price: prodcutData['price'],
+            imageUrl: prodcutData['imageUrl'],
+            isFavorite: prodcutData['isFavorite'],
+          ),
+        );
+      },
+    );
   }
 
   Future<void> addProduct(Product product) async {

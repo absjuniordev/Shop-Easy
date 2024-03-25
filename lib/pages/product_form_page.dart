@@ -67,34 +67,30 @@ class _ProductFormPageState extends State<ProductFormPage> {
       return;
     }
     _formKey.currentState?.save();
-
     setState(() {
       _isLoadin = true;
     });
-
     try {
       await Provider.of<ProductList>(
         context,
         listen: false,
       ).saveProduct(_formData);
-
       if (!mounted) return;
       Navigator.of(context).pop();
     } catch (error) {
       await showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Ocorreu um erro!'),
-          content: const Text('Erro ao salvar o produto'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Ok'),
-            )
-          ],
-        ),
+            title: const Text('Ocorreu um erro!'),
+            content: const Text('Erro ao salvar o produto'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Ok'),
+              )
+            ]),
       );
     } finally {
       setState(() => _isLoadin = false);
