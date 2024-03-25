@@ -61,7 +61,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     setState(() {});
   }
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) {
       return;
@@ -72,13 +72,18 @@ class _ProductFormPageState extends State<ProductFormPage> {
       _isLoadin = true;
     });
 
-    Provider.of<ProductList>(
-      context,
-      listen: false,
-    ).saveProduct(_formData).catchError((error) {
-      return showDialog(
+    try {
+      await Provider.of<ProductList>(
+        context,
+        listen: false,
+      ).saveProduct(_formData);
+
+      if (!mounted) return;
+      Navigator.of(context).pop();
+    } catch (error) {
+      await showDialog<void>(
         context: context,
-        builder: (ctx) => AlertDialog(
+        builder: (context) => AlertDialog(
           title: const Text('Ocorreu um erro!'),
           content: const Text('Erro ao salvar o produto'),
           actions: [
@@ -91,12 +96,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
           ],
         ),
       );
-    }).then(
-      (value) {
-        setState(() => _isLoadin = false);
-        Navigator.of(context).pop();
-      },
-    );
+    } finally {
+      setState(() => _isLoadin = false);
+    }
   }
 
   bool isValidateImageUrl(String url) {
