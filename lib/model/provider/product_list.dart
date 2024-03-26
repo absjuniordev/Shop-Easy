@@ -2,13 +2,12 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:shop/data/dummy_data.dart';
 import 'package:shop/model/provider/product.dart';
 
 class ProductList with ChangeNotifier {
   final _url =
       "https://shop-app-3837f-default-rtdb.firebaseio.com/products.json";
-  final List<Product> _items = dummyProducts;
+  final List<Product> _items = [];
 
   List<Product> get items => [..._items];
 
