@@ -12,6 +12,8 @@ dependencies:
   provider:
   intl:  
   http: ^0.13.3
+  page_transition: ^2.1.0
+  flutter_animate: ^4.5.0
 
 
 dev_dependencies:
