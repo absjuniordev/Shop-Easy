@@ -93,6 +93,7 @@ class ProductList with ChangeNotifier {
         },
       ),
     );
+
     final id = jsonDecode(response.body)['name'];
     _items.add(Product(
       id: id,
