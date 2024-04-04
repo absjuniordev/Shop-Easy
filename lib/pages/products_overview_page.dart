@@ -4,6 +4,7 @@ import 'package:shop/components/app_drawer.dart';
 import 'package:shop/components/badgee.dart';
 import 'package:shop/components/product_grid.dart';
 import 'package:shop/model/provider/cart.dart';
+import 'package:shop/model/provider/order_list.dart';
 import 'package:shop/model/provider/product_list.dart';
 import 'package:shop/utils/app_routes.dart';
 
@@ -29,11 +30,15 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
     Provider.of<ProductList>(
       context,
       listen: false,
-    ).loadProducts().then((value) {
+    ).loadProducts().then((_) {
       setState(() {
         _isLoading = false;
       });
     });
+    Provider.of<OrderList>(
+      context,
+      listen: false,
+    ).loadOrders();
   }
 
   @override
