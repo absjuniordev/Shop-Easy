@@ -1,4 +1,4 @@
-# ShopEase Loja Virtual  - Android e IOS
+# ShopEase - A sua Loja Virtual
 
 Este é um protótipo de aplicativo para loja virtual, desenvolvido para plataformas Android e iOS. Com este aplicativo, os usuários podem cadastrar produtos, visualizar, alterar, realizar compras e explorar uma variedade de produtos disponíveis.
 
@@ -17,6 +17,14 @@ Este é um protótipo de aplicativo para loja virtual, desenvolvido para platafo
 - **Firebase:** O Firebase é utilizado como banco de dados para armazenar e manipular informações dos produtos. A funcionalidade CRUD (Create, Read, Update, Delete) é implementada para gerenciar os dados.
 
 - **Provider:** Para o gerenciamento de estado da aplicação, é utilizado o Provider, uma biblioteca para o Flutter que facilita o compartilhamento de estados entre diferentes partes da aplicação.
+
+- **intl:** Biblioteca para formatação de datas e números.
+
+- **http:** Cliente HTTP para realizar requisições web.
+
+- **page_transition:** Biblioteca para animações de transição entre páginas.
+
+- **flutter_animate:** Pacote para animações em Flutter.
 
 ## Instalação e Execução
 
