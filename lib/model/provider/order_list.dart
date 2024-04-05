@@ -25,15 +25,17 @@ class OrderList with ChangeNotifier {
         {
           'total': cart.totalAmount,
           'date': date.toIso8601String(),
-          ' products': cart.items.values.map(
-            (cartItem) => {
-              'id': cartItem.id,
-              'productId': cartItem.productId,
-              'name': cartItem.name,
-              'quantity': cartItem.quantity,
-              'price': cartItem.price,
-            },
-          )
+          'products': cart.items.values
+              .map(
+                (cartItem) => {
+                  'id': cartItem.id,
+                  'productId': cartItem.productId,
+                  'name': cartItem.name,
+                  'quantity': cartItem.quantity,
+                  'price': cartItem.price,
+                },
+              )
+              .toList()
         },
       ),
     );
@@ -53,8 +55,10 @@ class OrderList with ChangeNotifier {
 
   Future<void> loadOrders() async {
     _items.clear();
-    final response =
-        await http.get(Uri.parse('${Constants.ORDER_BASE_URL}.json'));
+
+    final response = await http.get(
+      Uri.parse('${Constants.ORDER_BASE_URL}.json'),
+    );
     if (response.body == 'null') return;
     Map<String, dynamic> data = jsonDecode(response.body);
     data.forEach((orderId, orderData) {

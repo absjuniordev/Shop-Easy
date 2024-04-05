@@ -18,7 +18,7 @@ class SplashPage extends StatelessWidget {
               PageTransition(
                 duration: const Duration(seconds: 2),
                 child: const ProductsOverviewPage(),
-                type: PageTransitionType.bottomToTop,
+                type: PageTransitionType.fade,
               ),
             );
           },
@@ -28,7 +28,7 @@ class SplashPage extends StatelessWidget {
               duration: Duration(seconds: 4),
             )
           ],
-          child: const Text("Teste"),
+          child: const Text("Shopinho"),
         ),
       ),
     );

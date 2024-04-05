@@ -5,6 +5,7 @@ class Order {
   final double total;
   final List<CartItem> products;
   final DateTime date;
+
   Order({
     required this.id,
     required this.total,

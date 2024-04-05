@@ -12,7 +12,7 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  // bool _isLoading = true;
+  bool _isLoading = true;
 
   Future<void> _refreshProducts(BuildContext context) {
     return Provider.of<OrderList>(
@@ -21,16 +21,16 @@ class _OrderPageState extends State<OrderPage> {
     ).loadOrders();
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Provider.of<OrderList>(
-  //     context,
-  //     listen: false,
-  //   ).loadOrders().then((_) {
-  //     setState(() => _isLoading = false);
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<OrderList>(
+      context,
+      listen: false,
+    ).loadOrders().then((_) {
+      setState(() => _isLoading = false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,19 +41,19 @@ class _OrderPageState extends State<OrderPage> {
         title: const Text('Meus pedidos'),
         centerTitle: true,
       ),
-      // body: _isLoading
-      //     ? const Center(child: CircularProgressIndicator())
-      body: RefreshIndicator(
-        onRefresh: () => _refreshProducts(context),
-        child: ListView.builder(
-          itemCount: orderList.itemsCounts,
-          itemBuilder: (ctx, i) {
-            return OrderWidget(
-              order: orderList.items[i],
-            );
-          },
-        ),
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+              onRefresh: () => _refreshProducts(context),
+              child: ListView.builder(
+                itemCount: orderList.itemsCounts,
+                itemBuilder: (ctx, i) {
+                  return OrderWidget(
+                    order: orderList.items[i],
+                  );
+                },
+              ),
+            ),
       drawer: const AppDrawer(),
     );
   }
