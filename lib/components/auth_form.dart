@@ -11,12 +11,39 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   final _passwordControlle = TextEditingController();
-  final AuthMode _authMode = AuthMode.Login;
+  final _formKey = GlobalKey<FormState>();
+  AuthMode _authMode = AuthMode.Login;
+  bool _isLoading = false;
   final Map<String, String> _authData = {
     'email': '',
     'password': '',
   };
-  void _submit() {}
+  void _switchAuthMode() {
+    setState(() {
+      if (_isLogin()) {
+        _authMode = AuthMode.Signup;
+      } else {
+        _authMode = AuthMode.Login;
+      }
+    });
+  }
+
+  void _submit() {
+    final isvalid = _formKey.currentState?.validate() ?? false;
+    if (!isvalid) {
+      return;
+    }
+    _formKey.currentState?.save();
+    if (_isLogin()) {
+      //
+    } else {
+      //
+    }
+    setState(() => _isLoading = true);
+  }
+
+  bool _isLogin() => _authMode == AuthMode.Login;
+  bool _isSignup() => _authMode == AuthMode.Signup;
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -26,10 +53,11 @@ class _AuthFormState extends State<AuthForm> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Container(
-        height: 320,
+        height: _isLogin() ? 310 : 400,
         width: deviceSize.width * 0.75,
         padding: const EdgeInsets.all(16),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
@@ -58,13 +86,13 @@ class _AuthFormState extends State<AuthForm> {
                 },
                 onSaved: (password) => _authData['password'] = password ?? '',
               ),
-              if (_authMode == AuthMode.Signup)
+              if (_isSignup())
                 TextFormField(
                   decoration:
                       const InputDecoration(labelText: 'Confirme Senha'),
                   keyboardType: TextInputType.emailAddress,
                   obscureText: true,
-                  validator: _authMode == AuthMode.Login
+                  validator: _isLogin()
                       ? null
                       : (_password) {
                           final password = _password ?? '';
@@ -75,19 +103,27 @@ class _AuthFormState extends State<AuthForm> {
                         },
                 ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _submit,
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+              if (_isLoading)
+                const CircularProgressIndicator()
+              else
+                ElevatedButton(
+                  onPressed: _submit,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30,
+                      vertical: 8,
+                    ),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 8,
-                  ),
+                  child: Text(_isLogin() ? 'ENTRAR' : 'REGISTRAR'),
                 ),
+              const Spacer(),
+              TextButton(
+                onPressed: _switchAuthMode,
                 child:
-                    Text(_authMode == AuthMode.Login ? 'ENTRAR' : 'REGISTRAR'),
+                    Text(_isLogin() ? "DESEJA REGISTRAR?" : "JÁ POSSUE CONTA?"),
               )
             ],
           ),
