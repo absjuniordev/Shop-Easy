@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/model/provider/cart.dart';
 import 'package:shop/model/provider/order_list.dart';
 
@@ -6,11 +7,9 @@ class CartButton extends StatefulWidget {
   const CartButton({
     super.key,
     required this.cart,
-    required this.order,
   });
 
   final Cart cart;
-  final OrderList order;
 
   @override
   State<CartButton> createState() => _CartButtonState();
@@ -30,7 +29,11 @@ class _CartButtonState extends State<CartButton> {
                     setState(() {
                       _isLoading = true;
                     });
-                    await widget.order.addOrder(widget.cart);
+                    await Provider.of<OrderList>(
+                      context,
+                      listen: false,
+                    ).addOrder(widget.cart);
+
                     widget.cart.clean();
                     setState(() {
                       _isLoading = false;

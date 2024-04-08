@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:shop/pages/products_overview_page.dart';
+import 'package:shop/pages/auth_page.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -17,7 +17,7 @@ class SplashPage extends StatelessWidget {
               context,
               PageTransition(
                 duration: const Duration(seconds: 2),
-                child: const ProductsOverviewPage(),
+                child: const AuthPage(),
                 type: PageTransitionType.fade,
               ),
             );
@@ -28,7 +28,14 @@ class SplashPage extends StatelessWidget {
               duration: Duration(seconds: 4),
             )
           ],
-          child: const Text("Shopinho"),
+          child: const Text(
+            "ShopEase",
+            style: TextStyle(
+              fontSize: 41,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
     );

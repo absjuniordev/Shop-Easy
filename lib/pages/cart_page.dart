@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/cart_button.dart';
 import 'package:shop/components/cart_item_widget.dart';
 import 'package:shop/model/provider/cart.dart';
-import 'package:shop/model/provider/order_list.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -11,7 +10,7 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
-    final order = Provider.of<OrderList>(context, listen: false);
+
     final items = cart.items.values.toList();
 
     return Scaffold(
@@ -52,7 +51,7 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  CartButton(cart: cart, order: order)
+                  CartButton(cart: cart)
                 ],
               ),
             ),
