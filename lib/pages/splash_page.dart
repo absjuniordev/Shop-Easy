@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:shop/pages/auth_page.dart';
+import 'package:shop/pages/auth_or_home_page.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -17,7 +17,7 @@ class SplashPage extends StatelessWidget {
               context,
               PageTransition(
                 duration: const Duration(seconds: 2),
-                child: const AuthPage(),
+                child: const AuthOrHomePage(),
                 type: PageTransitionType.fade,
               ),
             );
