@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/exceptions/auth_exception.dart';
 import 'package:shop/model/provider/auth.dart';
 
 enum AuthMode { Signup, Login }
@@ -31,6 +32,22 @@ class _AuthFormState extends State<AuthForm> {
     });
   }
 
+  void _showError(String msg) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Ocrreu um Erro"),
+        content: Text(msg),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text("Fechar"),
+          )
+        ],
+      ),
+    );
+  }
+
   Future<void> _submit() async {
     final isvalid = _formKey.currentState?.validate() ?? false;
     if (!isvalid) {
@@ -40,16 +57,23 @@ class _AuthFormState extends State<AuthForm> {
 
     _formKey.currentState?.save();
     final auth = Provider.of<Auth>(context, listen: false);
-    if (_isLogin()) {
-      await auth.login(
-        _authData['email']!,
-        _authData['password']!,
-      );
-    } else {
-      await auth.signup(
-        _authData['email']!,
-        _authData['password']!,
-      );
+
+    try {
+      if (_isLogin()) {
+        await auth.login(
+          _authData['email']!,
+          _authData['password']!,
+        );
+      } else {
+        await auth.signup(
+          _authData['email']!,
+          _authData['password']!,
+        );
+      }
+    } on AuthException catch (error) {
+      _showError(error.toString());
+    } catch (error) {
+      _showError("Ocorreu um erro inesperado!");
     }
     setState(() => _isLoading = false);
   }
@@ -91,6 +115,9 @@ class _AuthFormState extends State<AuthForm> {
                 obscureText: true,
                 validator: (_password) {
                   final password = _password ?? '';
+                  if (_isLogin()) {
+                    return null;
+                  }
                   if (password.isEmpty || password.length < 5) {
                     return 'Informe uma senha valida';
                   }
