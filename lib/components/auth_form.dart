@@ -41,7 +41,10 @@ class _AuthFormState extends State<AuthForm> {
     _formKey.currentState?.save();
     final auth = Provider.of<Auth>(context, listen: false);
     if (_isLogin()) {
-      //
+      await auth.login(
+        _authData['email']!,
+        _authData['password']!,
+      );
     } else {
       await auth.signup(
         _authData['email']!,
@@ -62,7 +65,7 @@ class _AuthFormState extends State<AuthForm> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Container(
-        height: _isLogin() ? 330 : 400,
+        height: _isLogin() ? 325 : 400,
         width: deviceSize.width * 0.75,
         padding: const EdgeInsets.all(16),
         child: Form(
