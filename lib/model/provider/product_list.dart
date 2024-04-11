@@ -1,20 +1,21 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:shop/exceptions/http_exception.dart';
 import 'package:shop/model/provider/product.dart';
-
 import '../../utils/constants.dart';
 
 class ProductList with ChangeNotifier {
   final String _token;
+  final String _userId;
   List<Product> _items = [];
 
-  ProductList(this._token, this._items);
+  ProductList([
+    this._token = '',
+    this._userId = '',
+    this._items = const [],
+  ]);
 
   List<Product> get items => [..._items];
 
@@ -62,16 +63,23 @@ class ProductList with ChangeNotifier {
 
   Future<void> loadProducts() async {
     _items.clear();
-    final response = await http
-        .get(Uri.parse("${Constants.PRODUCT_BASE_URL}.json?auth=$_token"));
-
+    final response = await http.get(
+      Uri.parse("${Constants.PRODUCT_BASE_URL}.json?auth=$_token"),
+    );
     if (response.body == 'null') return; //caso BD vazio
 
+    final favResponse = await http.get(
+      Uri.parse("${Constants.USER_FAVORITES_URL}/$_userId.json?auth=$_token"),
+    );
+
     final Map<String, dynamic> data = jsonDecode(response.body);
+    final Map<String, dynamic> favData =
+        favResponse.body == 'null' ? {} : jsonDecode(favResponse.body);
 
     data.forEach(
       //chave        valor
       (productId, prodcutData) {
+        final isFavorite = favData[productId] ?? false;
         _items.add(
           Product(
             id: productId,
@@ -79,7 +87,7 @@ class ProductList with ChangeNotifier {
             description: prodcutData['description'],
             price: prodcutData['price'],
             imageUrl: prodcutData['imageUrl'],
-            isFavorite: prodcutData['isFavorite'],
+            isFavorite: isFavorite,
           ),
         );
       },
@@ -96,7 +104,6 @@ class ProductList with ChangeNotifier {
           'description': product.description,
           'price': product.price,
           'imageUrl': product.imageUrl,
-          'isFavorite': product.isFavorite,
         },
       ),
     );
