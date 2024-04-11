@@ -1,14 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:math';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:shop/exceptions/http_exception.dart';
 import 'package:shop/model/provider/product.dart';
 
 import '../../utils/constants.dart';
 
 class ProductList with ChangeNotifier {
-  final List<Product> _items = [];
+  String _token;
+  List<Product> _items = [];
+
+  ProductList(this._token, this._items);
 
   List<Product> get items => [..._items];
 
@@ -55,8 +61,8 @@ class ProductList with ChangeNotifier {
 
   Future<void> loadProducts() async {
     _items.clear();
-    final response =
-        await http.get(Uri.parse("${Constants.PRODUCT_BASE_URL}.json"));
+    final response = await http
+        .get(Uri.parse("${Constants.PRODUCT_BASE_URL}.json?auth=$_token"));
 
     if (response.body == 'null') return; //caso BD vazio
 
