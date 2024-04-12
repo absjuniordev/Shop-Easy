@@ -17,6 +17,7 @@ class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   AuthMode _authMode = AuthMode.Login;
   bool _isLoading = false;
+  bool _isObscured = true;
 
   final Map<String, String> _authData = {
     'email': '',
@@ -78,6 +79,12 @@ class _AuthFormState extends State<AuthForm> {
     setState(() => _isLoading = false);
   }
 
+  void _toggleObscurede() {
+    setState(() {
+      _isObscured = !_isObscured;
+    });
+  }
+
   bool _isLogin() => _authMode == AuthMode.Login;
   bool _isSignup() => _authMode == AuthMode.Signup;
   @override
@@ -110,9 +117,19 @@ class _AuthFormState extends State<AuthForm> {
               ),
               TextFormField(
                 controller: _passwordControlle,
-                decoration: const InputDecoration(labelText: 'Senha'),
+                decoration: InputDecoration(
+                  labelText: 'Senha',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _toggleObscurede();
+                    },
+                    icon: Icon(
+                      _isObscured ? Icons.visibility_off : Icons.visibility,
+                    ),
+                  ),
+                ),
                 keyboardType: TextInputType.emailAddress,
-                obscureText: true,
+                obscureText: _isObscured,
                 validator: (_password) {
                   final password = _password ?? '';
                   if (_isLogin()) {
@@ -130,7 +147,7 @@ class _AuthFormState extends State<AuthForm> {
                   decoration:
                       const InputDecoration(labelText: 'Confirme Senha'),
                   keyboardType: TextInputType.emailAddress,
-                  obscureText: true,
+                  obscureText: _isObscured,
                   validator: _isLogin()
                       ? null
                       : (_password) {
@@ -160,7 +177,7 @@ class _AuthFormState extends State<AuthForm> {
                 ),
               const Spacer(),
               TextButton(
-                onPressed: _switchAuthMode,
+                onPressed: _isLoading ? null : _switchAuthMode,
                 child:
                     Text(_isLogin() ? "DESEJA REGISTRAR?" : "JÁ POSSUE CONTA?"),
               )
