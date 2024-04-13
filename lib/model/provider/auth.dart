@@ -98,12 +98,16 @@ class Auth with ChangeNotifier {
     return _authenticate(email, password, 'signInWithPassword');
   }
 
-  void logout() {
+  void logout() async {
     _token = null;
     _email = null;
     _userId = null;
     _expiryDate = null;
-    notifyListeners();
+    _clearAutoLogout();
+
+    Store.remove('userData').then((_) {
+      notifyListeners();
+    });
   }
 
   void _clearAutoLogout() {

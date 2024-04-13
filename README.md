@@ -26,6 +26,8 @@ Este é um protótipo de aplicativo para loja virtual, desenvolvido para platafo
 
 - **flutter_animate:** Pacote para animações em Flutter.
 
+- **shared_preferences** Pacote para armazenamnto de dados no dispositivo.
+
 ## Instalação e Execução
 
 1. Clone este repositório em sua máquina local.
