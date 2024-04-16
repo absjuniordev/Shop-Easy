@@ -29,10 +29,10 @@ class _AuthFormState extends State<AuthForm>
     setState(() {
       if (_isLogin()) {
         _authMode = AuthMode.signup;
-        // _controller?.forward();
+        _controller?.forward();
       } else {
         _authMode = AuthMode.login;
-        // _controller?.reverse();
+        _controller?.reverse();
       }
     });
   }
@@ -89,40 +89,49 @@ class _AuthFormState extends State<AuthForm>
     });
   }
 
-  // AnimationController? _controller;
-  // Animation<Size>? _heightAnimation;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _controller = AnimationController(
-  //     vsync: this,
-  //     duration: const Duration(
-  //       milliseconds: 300,
-  //     ),
-  //   );
-
-  //   _heightAnimation = Tween(
-  //     begin: const Size(double.infinity, 340),
-  //     end: const Size(double.infinity, 400),
-  //   ).animate(
-  //     CurvedAnimation(
-  //       parent: _controller!,
-  //       curve: Curves.linear,
-  //     ),
-  //   );
-
-  //   _heightAnimation?.addListener(() => setState(() {}));
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _controller?.dispose();
-  // }
+  AnimationController? _controller;
+  Animation<double>? _opacityAnimation;
+  Animation<Offset>? _slideAnimation;
 
   bool _isLogin() => _authMode == AuthMode.login;
-  bool _isSignup() => _authMode == AuthMode.signup;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 300,
+      ),
+    );
+
+    _opacityAnimation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.linear,
+      ),
+    );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, -1.5),
+      end: const Offset(0, 0),
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.linear,
+      ),
+    );
+
+    // _heightAnimation?.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller?.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,22 +190,35 @@ class _AuthFormState extends State<AuthForm>
                 },
                 onSaved: (password) => _authData['password'] = password ?? '',
               ),
-              if (_isSignup())
-                TextFormField(
-                  decoration:
-                      const InputDecoration(labelText: 'Confirme Senha'),
-                  keyboardType: TextInputType.emailAddress,
-                  obscureText: _isObscured,
-                  validator: _isLogin()
-                      ? null
-                      : (_password) {
-                          final password = _password ?? '';
-                          if (password != _passwordControlle.text) {
-                            return 'Senha não confere';
-                          }
-                          return null;
-                        },
+              AnimatedContainer(
+                constraints: BoxConstraints(
+                  minHeight: _isLogin() ? 0 : 60,
+                  maxHeight: _isLogin() ? 0 : 120,
                 ),
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn,
+                child: FadeTransition(
+                  opacity: _opacityAnimation!,
+                  child: SlideTransition(
+                    position: _slideAnimation!,
+                    child: TextFormField(
+                      decoration:
+                          const InputDecoration(labelText: 'Confirme Senha'),
+                      keyboardType: TextInputType.emailAddress,
+                      obscureText: _isObscured,
+                      validator: _isLogin()
+                          ? null
+                          : (_password) {
+                              final password = _password ?? '';
+                              if (password != _passwordControlle.text) {
+                                return 'Senha não confere';
+                              }
+                              return null;
+                            },
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               if (_isLoading)
                 const CircularProgressIndicator()
