@@ -29,10 +29,10 @@ class _AuthFormState extends State<AuthForm>
     setState(() {
       if (_isLogin()) {
         _authMode = AuthMode.signup;
-        _controller?.forward();
+        // _controller?.forward();
       } else {
         _authMode = AuthMode.login;
-        _controller?.reverse();
+        // _controller?.reverse();
       }
     });
   }
@@ -89,37 +89,37 @@ class _AuthFormState extends State<AuthForm>
     });
   }
 
-  AnimationController? _controller;
-  Animation<Size>? _heightAnimation;
+  // AnimationController? _controller;
+  // Animation<Size>? _heightAnimation;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(
-        milliseconds: 400,
-      ),
-    );
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _controller = AnimationController(
+  //     vsync: this,
+  //     duration: const Duration(
+  //       milliseconds: 300,
+  //     ),
+  //   );
 
-    _heightAnimation = Tween(
-      begin: const Size(double.infinity, 340),
-      end: const Size(double.infinity, 400),
-    ).animate(
-      CurvedAnimation(
-        parent: _controller!,
-        curve: Curves.linear,
-      ),
-    );
+  //   _heightAnimation = Tween(
+  //     begin: const Size(double.infinity, 340),
+  //     end: const Size(double.infinity, 400),
+  //   ).animate(
+  //     CurvedAnimation(
+  //       parent: _controller!,
+  //       curve: Curves.linear,
+  //     ),
+  //   );
 
-    _heightAnimation?.addListener(() => setState(() {}));
-  }
+  //   _heightAnimation?.addListener(() => setState(() {}));
+  // }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _controller?.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   _controller?.dispose();
+  // }
 
   bool _isLogin() => _authMode == AuthMode.login;
   bool _isSignup() => _authMode == AuthMode.signup;
@@ -132,9 +132,10 @@ class _AuthFormState extends State<AuthForm>
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Container(
-        // height: _isLogin() ? 325 : 400,
-        height: _heightAnimation?.value.height ?? (_isLogin() ? 325 : 400),
+      child: AnimatedContainer(
+        curve: Curves.easeIn,
+        duration: const Duration(milliseconds: 300),
+        height: _isLogin() ? 325 : 400,
         width: deviceSize.width * 0.75,
         padding: const EdgeInsets.all(16),
         child: Form(
