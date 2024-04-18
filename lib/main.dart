@@ -12,6 +12,7 @@ import 'package:shop/pages/product_form_page.dart';
 import 'package:shop/pages/products_page.dart';
 import 'package:shop/pages/splash_page.dart';
 import 'package:shop/utils/app_routes.dart';
+import 'package:shop/utils/custom_route.dart';
 
 void main() {
   runApp(const MainApp());
@@ -54,17 +55,20 @@ class MainApp extends StatelessWidget {
         title: "Meu Shop",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: 'Lato',
-          primarySwatch: Colors.purple,
-          hintColor: Colors.deepOrange,
-          appBarTheme: const AppBarTheme(
-            color: Colors.purple,
-            titleTextStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
+            fontFamily: 'Lato',
+            primarySwatch: Colors.purple,
+            hintColor: Colors.deepOrange,
+            appBarTheme: const AppBarTheme(
+              color: Colors.purple,
+              titleTextStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
             ),
-          ),
-        ),
+            pageTransitionsTheme: PageTransitionsTheme(builders: {
+              TargetPlatform.iOS: CustomPageTransitionsBuilder(),
+              TargetPlatform.android: CustomPageTransitionsBuilder(),
+            })),
         routes: {
           AppRoutes.SPLASH_PAGE: (context) => const SplashPage(),
           AppRoutes.AUTH_OR_HOME_PAGE: (context) => const AuthOrHomePage(),
