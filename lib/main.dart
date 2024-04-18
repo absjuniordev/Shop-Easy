@@ -68,7 +68,7 @@ class MainApp extends StatelessWidget {
         routes: {
           AppRoutes.SPLASH_PAGE: (context) => const SplashPage(),
           AppRoutes.AUTH_OR_HOME_PAGE: (context) => const AuthOrHomePage(),
-          AppRoutes.PRODUCT_DETAIL: (context) => const ProductDatailPage(),
+          AppRoutes.PRODUCT_DETAIL: (context) => const ProductDetailPage(),
           AppRoutes.CART: (context) => const CartPage(),
           AppRoutes.ORDERS: (context) => const OrderPage(),
           AppRoutes.PRODUCTS_PAGE: (context) => const ProductsPage(),
