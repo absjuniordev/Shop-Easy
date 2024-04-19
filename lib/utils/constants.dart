@@ -1,8 +1,8 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class Constants {
-  static const USER_FAVORITES_URL =
-      "https://shop-app-3837f-default-rtdb.firebaseio.com/userFavorites";
-  static const PRODUCT_BASE_URL =
-      "https://shop-app-3837f-default-rtdb.firebaseio.com/products";
-  static const ORDER_BASE_URL =
-      "https://shop-app-3837f-default-rtdb.firebaseio.com/orders";
+  static String get baseUrl => dotenv.env['BASE_URL']!;
+  static final userFavoriteUrl = "$baseUrl/userFavorites";
+  static final productBaseUrl = "$baseUrl/products";
+  static final orderBaseUrl = "$baseUrl/orders";
 }

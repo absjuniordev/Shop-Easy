@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop/data/store.dart';
@@ -30,10 +30,11 @@ class Auth with ChangeNotifier {
     return isAuth ? _userId : null;
   }
 
+  String get apiKey => dotenv.env['API_KEY']!;
   Future<void> _authenticate(
       String email, String password, String urlFragment) async {
     final _url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:$urlFragment?key=AIzaSyD5dlfx9297TNriqblzIvIJXPvIQgXXLaA";
+        "https://identitytoolkit.googleapis.com/v1/accounts:$urlFragment?key=$apiKey";
 
     final response = await http.post(
       Uri.parse(_url),
