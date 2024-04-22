@@ -28,6 +28,7 @@ flutter:
   
   assets:
     - assets/images/product-placeholder.png    
+    - .env
 
   fonts:
     - family: Lato

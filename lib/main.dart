@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/model/provider/auth.dart';
 import 'package:shop/model/provider/cart.dart';
@@ -14,8 +15,9 @@ import 'package:shop/pages/splash_page.dart';
 import 'package:shop/utils/app_routes.dart';
 import 'package:shop/utils/custom_route.dart';
 
-void main() {
+void main() async {
   runApp(const MainApp());
+  await dotenv.load(fileName: ".env");
 }
 
 class MainApp extends StatelessWidget {

@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:shop/data/store.dart';
 import 'package:shop/exceptions/auth_exception.dart';
 
+import '../../utils/constants.dart';
+
 class Auth with ChangeNotifier {
   String? _token;
   String? _email;
@@ -30,14 +32,13 @@ class Auth with ChangeNotifier {
     return isAuth ? _userId : null;
   }
 
-  String get apiKey => dotenv.env['API_KEY']!;
   Future<void> _authenticate(
       String email, String password, String urlFragment) async {
-    final _url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:$urlFragment?key=$apiKey";
+    final url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlFragment?key=${Constants.webApiKey}';
 
     final response = await http.post(
-      Uri.parse(_url),
+      Uri.parse(url),
       body: jsonEncode(
         {
           'email': email,
