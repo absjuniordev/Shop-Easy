@@ -1,4 +1,4 @@
-# ShopEase - A sua Loja Virtual
+# Shop Easy - A sua Loja Virtual
 
 Este é um protótipo de aplicativo para loja virtual, desenvolvido para plataformas Android e iOS. Com este aplicativo, os usuários podem cadastrar produtos, visualizar, alterar, realizar compras e explorar uma variedade de produtos disponíveis.
 
